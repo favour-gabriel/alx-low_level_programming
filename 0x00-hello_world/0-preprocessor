@@ -1,2 +1,13 @@
 #!/bin/bash
-gcc -E $CFILE -o c
+#include <stdio.h>
+/**
+* main - Entry point
+* return: Always 0 success
+*/
+int main (void)
+{
+	printf("Hello world\n")
+
+	Return (0);
+
+}	
