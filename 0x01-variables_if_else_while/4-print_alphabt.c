@@ -7,15 +7,15 @@
  */
 int main(void)
 {
-	char m, b, c;
+	char low, e, q;
 
-	b = 'b';
-	c = 'c';
+	e = 'e';
+	q = 'q';
 
-	for (m = 'a'; m <= 'z'; m++)
+	for (low = 'a'; low <= 'z'; low++)
 	{
-		if (m != b && m != c)
-			putchar(m);
+		if (low != e && low != q)
+			putchar(low);
 	}
 	putchar('\n');
 	return (0);
