@@ -11,17 +11,17 @@ void close_file(int vb);
  */
 char *create_buffer(char *file)
 {
-	char *begin;
+        char *begin;
 
-	begin = malloc(sizeof(char) * 1024);
+        begin = malloc(sizeof(char) * 1024);
 
-	if (begin == NULL)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
-		exit(99);
-	}
+        if (begin == NULL)
+        {
+                dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file);
+                exit(99);
+        }
 
-	return (begin);
+        return (begin);
 }
 
 /**
@@ -30,12 +30,12 @@ char *create_buffer(char *file)
  */
 void close_file(int vb)
 {
-	int m;
+        int m;
 
-	m = close(vb);
+        m = close(vb);
 
-	if (m == -1)
-	{
+  if (m == -1)
+        {
 dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", vb);
 exit(100);
 }
@@ -49,44 +49,46 @@ exit(100);
  */
 int main(int argc, char *argv[])
 {
-	int be, try, ra, we;
-	char *begin;
+        int be, try, ra, we;
+        char *begin;
 
-	if (argc != 3)
-	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-		exit(97);
-	}
+        if (argc != 3)
+        {
+                dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
+                exit(97);
+        }
 
-	begin = create_buffer(argv[2]);
-	be = open(argv[1], O_RDONLY);
-	ra = read(be, begin, 1024);
-	try = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+        begin = create_buffer(argv[2]);
+        be = open(argv[1], O_RDONLY);
+        ra = read(be, begin, 1024);
+        try = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 
-	do {
-		if (be == -1 || ra == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-			free(begin);
-			exit(98);
-		}
+        do {
+                if (be == -1 || ra == -1)
+                {
+                        dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+                        free(begin);
 
-		we = write(try, begin, ra);
-		if (try == -1 || we == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-			free(begin);
-			exit(99);
-		}
+free(begin);
+                        exit(98);
+                }
 
-		ra = read(be, begin, 1024);
-		try = open(argv[2], O_WRONLY | O_APPEND);
+                we = write(try, begin, ra);
+                if (try == -1 || we == -1)
+                {
+                        dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+                        free(begin);
+                        exit(99);
+                }
 
-	} while (ra > 0);
+                ra = read(be, begin, 1024);
+                try = open(argv[2], O_WRONLY | O_APPEND);
 
-	free(begin);
-	close_file(be);
-	close_file(try);
+        } while (ra > 0);
 
-	return (0);
+        free(begin);
+        close_file(be);
+        close_file(try);
+
+        return (0);
 }
